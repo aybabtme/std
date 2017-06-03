@@ -1,13 +1,12 @@
 package retry
 
 import (
+	"context"
 	"math"
 	"math/rand"
 	"time"
 
 	"github.com/aybabtme/std/log"
-
-	"golang.org/x/net/context"
 )
 
 // Defaults for the retries.

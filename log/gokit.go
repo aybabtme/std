@@ -10,10 +10,11 @@ import (
 
 var logger = newLog(os.Stderr)
 
-type kitlog struct{ ctx *log.Context }
+type kitlog struct{ ctx log.Logger }
 
 func newLog(w io.Writer) *kitlog {
-	return &kitlog{ctx: log.NewContext(log.NewJSONLogger(w))}
+
+	return &kitlog{ctx: log.NewJSONLogger(w)}
 }
 
 func (l *kitlog) KV(k string, v interface{}) Log {
@@ -27,7 +28,7 @@ func (l *kitlog) KV(k string, v interface{}) Log {
 	}:
 		v = s.GoString()
 	}
-	return &kitlog{ctx: l.ctx.With(k, v)}
+	return &kitlog{ctx: log.With(l.ctx, k, v)}
 }
 
 func (l *kitlog) KVs(f F) Log {
